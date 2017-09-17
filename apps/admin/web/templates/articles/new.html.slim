@@ -1,0 +1,29 @@
+h1 New article
+- if validation.any?
+  | Oops, you had some errors 
+
+
+
+form action="/admin/articles" method="POST"
+  == csrf_tag
+  p 
+   | Title
+   br
+   input type="text" name="article[title]" value=validation[:title] 
+  p
+   | Author
+   select name="article[author_id]"
+    - authors.each do |author|
+      option value=author.id selected=(validation[:author_id]== author.id) = author.name
+
+
+  p
+   | Status
+   select name="article[status]" 
+    option value="draft"  Draft
+    option value="published" Published
+  p
+   | Published at
+   br
+   input type="text" name="article[published_at]" value=validation[:published_at] 
+  button Create article
